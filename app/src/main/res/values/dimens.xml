@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <dimen name="enter_city_edit_height">64dp</dimen>
+    <dimen name="dp16_margin">16dp</dimen>
+    <dimen name="enter_city_end_start_margin">50dp</dimen>
+</resources>
