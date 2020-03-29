@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <variable
+            name="chooseCityViewModel"
+            type="com.example.weatherapp.home.mvvm.view_models.ChooseCityViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="@dimen/enter_city_edit_height"
+            app:layout_constraintHorizontal_weight="1"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            android:layout_marginTop="@dimen/dp16_margin"
+            android:layout_marginEnd="@dimen/dp16_margin"
+            android:layout_marginStart="@dimen/dp16_margin"
+            android:text="@={chooseCityViewModel.city}"
+            android:id="@+id/dialog_choose_city_edit" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toBottomOf="@id/dialog_choose_city_edit"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            android:layout_marginTop="@dimen/dp16_margin"
+            android:layout_marginEnd="@dimen/dp16_margin"
+            android:layout_marginStart="@dimen/dp16_margin"
+            android:orientation="horizontal">
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:text="@string/submit"
+                android:textColor="@android:color/white"
+                android:layout_marginEnd="@dimen/dp16_margin"
+                android:onClick="@{() -> chooseCityViewModel.saveCity()}"
+                android:id="@+id/dialog_choose_city_btn_submit" />
+
+            <Button
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@color/colorPrimary"
+                android:text="@string/cancel"
+                android:textColor="@android:color/white"
+                android:id="@+id/dialog_choose_city_btn_cancel" />
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
