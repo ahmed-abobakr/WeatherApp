@@ -18,6 +18,9 @@ import com.example.weatherapp.home.mvvm.views.adapters.WeatherAdapter
 import com.example.weatherapp.home.mvvm.views.dialogs.ChooseCityDialogFragment
 import kotlinx.android.synthetic.main.fragment_home.*
 import android.content.DialogInterface
+import androidx.navigation.Navigation
+import androidx.navigation.fragment.findNavController
+import com.example.weatherapp.home.data.models.WeatherLocalData
 
 class HomeFragment<FragmentHomeBinding : ViewDataBinding>: BaseFragment<FragmentHomeBinding>(), DialogInterface {
 
@@ -48,7 +51,9 @@ class HomeFragment<FragmentHomeBinding : ViewDataBinding>: BaseFragment<Fragment
         })
 
         homeViewModel.weatherLiveData.observe(this, Observer {
-            val adapter = WeatherAdapter(it)
+            val adapter = WeatherAdapter(it, WeatherAdapter.WeatherItemClickListener {
+                weather -> findNavController().navigate(R.id.action_homeFragment_to_detailsFragment, createWeatherBundle(weather))
+            })
             forecast_recycler.layoutManager = LinearLayoutManager(this.activity)
             forecast_recycler.adapter = adapter
             homeViewModel.isLoading(false)
@@ -57,6 +62,12 @@ class HomeFragment<FragmentHomeBinding : ViewDataBinding>: BaseFragment<Fragment
         homeViewModel.mIsLoading.observe(this, Observer { loading -> if(!loading) hideBlockLoading() })
 
         super.handleCloudError(homeViewModel)
+    }
+
+    private fun createWeatherBundle(weather: WeatherLocalData): Bundle? {
+        val args = Bundle()
+        args.putParcelable("weather", weather)
+        return args
     }
 
     private fun showChooseCityDialog() {

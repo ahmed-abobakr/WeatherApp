@@ -6,13 +6,17 @@
         <variable
             name="weather"
             type="com.example.weatherapp.home.data.models.WeatherLocalData" />
+        <variable
+            name="clickListener"
+            type="com.example.weatherapp.home.mvvm.views.adapters.WeatherAdapter.WeatherItemClickListener" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:minHeight="?android:attr/listPreferredItemHeight"
-        android:background="@drawable/today_touch_selector">
+        android:background="@drawable/today_touch_selector"
+        android:onClick="@{()-> clickListener.onItemClick(weather)}">
 
         <LinearLayout
             android:layout_width="0dp"
