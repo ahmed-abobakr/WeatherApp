@@ -7,7 +7,8 @@ import com.example.weatherapp.databinding.ItemForecastBinding
 import com.example.weatherapp.databinding.ItemForecastTodayBinding
 import com.example.weatherapp.home.data.models.WeatherLocalData
 
-class WeatherAdapter(private val weatherList: List<WeatherLocalData>): RecyclerView.Adapter<WeatherAdapter.WeatherViewHolder>() {
+class WeatherAdapter(private val weatherList: List<WeatherLocalData>, private val listener: WeatherItemClickListener)
+    : RecyclerView.Adapter<WeatherAdapter.WeatherViewHolder>() {
 
     override fun getItemViewType(position: Int): Int {
         return when(position){ 0 -> WeatherViewHolder.VIEW_TYPE_TODAY else -> WeatherViewHolder.VIEW_TYPE_FUTURE_DAY}
@@ -27,7 +28,7 @@ class WeatherAdapter(private val weatherList: List<WeatherLocalData>): RecyclerV
 
     override fun onBindViewHolder(holder: WeatherViewHolder, position: Int) {
         val item = weatherList[position]
-        holder.bind(item)
+        holder.bind(item, listener)
     }
 
 
@@ -43,11 +44,13 @@ class WeatherAdapter(private val weatherList: List<WeatherLocalData>): RecyclerV
             this.bindingToday = binding
         }
 
-        fun bind(weather: WeatherLocalData){
+        fun bind(weather: WeatherLocalData, listener: WeatherItemClickListener){
             binding?.let { it.weather = weather
+                it.clickListener = listener
                 it.executePendingBindings()
             }
             bindingToday?.let { it.weather = weather
+                it.clickListener = listener
                 it.executePendingBindings()
             }
         }
@@ -67,5 +70,9 @@ class WeatherAdapter(private val weatherList: List<WeatherLocalData>): RecyclerV
                 return WeatherViewHolder(ItemForecastTodayBinding.inflate(layoutInflater, parent, false))
             }
         }
+    }
+
+    public class WeatherItemClickListener(val clickListener: (weather: WeatherLocalData) -> Unit){
+        fun onItemClick(weatherItem: WeatherLocalData) = clickListener(weatherItem)
     }
 }
