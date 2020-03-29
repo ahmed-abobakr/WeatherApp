@@ -51,10 +51,10 @@ dependencies {
     implementation "android.arch.navigation:navigation-ui-ktx:1.0.0"
 
     //Retrofit
-    implementation "com.squareup.retrofit2:retrofit:2.7.2"
-    implementation "com.squareup.retrofit2:converter-moshi:2.7.2"
-    implementation "com.squareup.moshi:moshi:1.9.2"
-    implementation "com.squareup.moshi:moshi-kotlin:1.9.2"
+    implementation "com.squareup.retrofit2:retrofit:2.5.0"
+    implementation "com.squareup.retrofit2:converter-moshi:2.5.0"
+    implementation "com.squareup.moshi:moshi:1.8.0"
+    implementation "com.squareup.moshi:moshi-kotlin:1.8.0"
     implementation 'com.squareup.okhttp3:logging-interceptor:4.4.1'
 
     //Coroutines
@@ -65,6 +65,9 @@ dependencies {
     // Room
     implementation "androidx.room:room-runtime:2.2.4"
     kapt "androidx.room:room-compiler:2.2.4"
+
+    //Preference Manager
+    implementation "androidx.preference:preference-ktx:1.1.0"
 
     //Material Dialog
     implementation 'com.afollestad.material-dialogs:core:3.3.0'
