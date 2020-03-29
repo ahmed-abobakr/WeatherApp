@@ -1,23 +1,27 @@
 package com.example.weatherapp.base.data
 
-public interface DbManager{
+import androidx.lifecycle.LiveData
+import com.example.weatherapp.home.data.models.WeatherData
+import com.example.weatherapp.home.data.models.WeatherLocalData
 
-    fun saveWeather()
+interface DbManager{
 
-    fun updateWeather()
+    suspend fun saveWeather(weather: WeatherLocalData)
 
-    fun getWeather()
+    suspend fun updateWeather(weather: WeatherLocalData)
 
-    fun deleteWeather()
+    fun getWeather(): LiveData<List<WeatherLocalData>>
+
+    suspend fun deleteWeather(weather: WeatherLocalData)
 }
 
-public interface PreferenceManager{
+interface PreferenceManager{
 
-    fun saveCountry(country: String)
+    fun saveCity(country: String)
 
-    fun getCountry(): String
+    fun getCity(): String
 }
 
-public interface DataManager: DbManager,
+interface DataManager: DbManager,
     PreferenceManager,
     APIManager
