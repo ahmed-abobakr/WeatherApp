@@ -11,7 +11,7 @@ import androidx.fragment.app.Fragment
 
 open abstract class BaseViewOnlyFragment<T: ViewDataBinding> : Fragment() {
 
-    private lateinit var mViewDataBinding : T
+    protected lateinit var mViewDataBinding : T
     private lateinit var mView: View
 
     @LayoutRes
