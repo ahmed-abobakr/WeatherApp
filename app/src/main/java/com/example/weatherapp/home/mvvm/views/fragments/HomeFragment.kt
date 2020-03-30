@@ -19,6 +19,7 @@ import com.example.weatherapp.home.mvvm.views.dialogs.ChooseCityDialogFragment
 import kotlinx.android.synthetic.main.fragment_home.*
 import android.content.DialogInterface
 import androidx.navigation.Navigation
+import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
 import com.example.weatherapp.home.data.models.WeatherLocalData
 
@@ -51,8 +52,12 @@ class HomeFragment<FragmentHomeBinding : ViewDataBinding>: BaseFragment<Fragment
         })
 
         homeViewModel.weatherLiveData.observe(this, Observer {
-            val adapter = WeatherAdapter(it, WeatherAdapter.WeatherItemClickListener {
-                weather -> findNavController().navigate(R.id.action_homeFragment_to_detailsFragment, createWeatherBundle(weather))
+            val adapter = WeatherAdapter(it, WeatherAdapter.WeatherItemClickListener { weather ->
+                    when (resources.getBoolean(R.bool.is_tablet)) {
+                        false -> displayDetailsScreenInSingleView(weather)
+                        else -> displayDetailsScreenInMutiplesViews(weather)
+                    }
+
             })
             forecast_recycler.layoutManager = LinearLayoutManager(this.activity)
             forecast_recycler.adapter = adapter
@@ -62,6 +67,16 @@ class HomeFragment<FragmentHomeBinding : ViewDataBinding>: BaseFragment<Fragment
         homeViewModel.mIsLoading.observe(this, Observer { loading -> if(!loading) hideBlockLoading() })
 
         super.handleCloudError(homeViewModel)
+    }
+
+    private fun displayDetailsScreenInMutiplesViews(weather: WeatherLocalData) {
+        val detailsNavHostFragment = childFragmentManager.findFragmentById(R.id.nav_host_details_fragment)
+                                as NavHostFragment
+        detailsNavHostFragment.navController.navigate(R.id.detailsFragment2, createWeatherBundle(weather))
+    }
+
+    private fun displayDetailsScreenInSingleView(weather: WeatherLocalData) {
+        findNavController().navigate(R.id.action_homeFragment_to_detailsFragment, createWeatherBundle(weather))
     }
 
     private fun createWeatherBundle(weather: WeatherLocalData): Bundle? {

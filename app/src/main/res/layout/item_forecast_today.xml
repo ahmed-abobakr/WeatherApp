@@ -27,7 +27,8 @@
             android:layout_marginTop="16dp"
             android:layout_marginBottom="16dp"
             android:layout_marginStart="60dp"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:id="@+id/list_item_details_container">
 
             <TextView
                 android:id="@+id/list_item_date_textview"
@@ -63,8 +64,8 @@
             app:layout_constraintHorizontal_weight="5"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            android:layout_marginEnd="16dp"
+            app:layout_constraintStart_toEndOf="@id/list_item_details_container"
+            android:layout_marginEnd="@dimen/dp16_margin"
             android:gravity="center_horizontal|bottom">
 
             <ImageView
