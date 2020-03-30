@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <data>
+        <variable
+            name="weather"
+            type="com.example.weatherapp.home.data.models.WeatherLocalData" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/dp16_margin">
+
+            <TextView
+                android:fontFamily="sans-serif-condensed"
+                android:id="@+id/detail_day_textview"
+                android:layout_height="wrap_content"
+                android:minWidth="120dp"
+                android:layout_width="wrap_content"
+                android:textSize="24sp"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
+
+            <TextView
+                android:fontFamily="sans-serif-condensed"
+                android:id="@+id/detail_date_textview"
+                android:layout_height="wrap_content"
+                android:layout_width="wrap_content"
+                android:textColor="@color/grey_700"
+                android:textSize="20sp"
+                android:text="@{weather.date}"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/detail_day_textview" />
+
+            <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp16_margin"
+                android:layout_width="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@id/detail_day_textview"
+                android:id="@+id/detail_main_content_container">
+
+                <TextView
+                    android:fontFamily="sans-serif-light"
+                    android:id="@+id/detail_high_textview"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:textSize="96sp"
+                    android:text="@{String.format(@string/format_temp, weather.high)}"/>
+
+                <TextView
+                    android:id="@+id/detail_low_textview"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="8dp"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/grey_700"
+                    android:textSize="48sp"
+                    android:text="@{String.format(@string/format_temp, weather.low)}"/>
+
+                <!-- Humidity, wind, pressure -->
+                <TextView
+                    android:fontFamily="sans-serif-condensed"
+                    android:id="@+id/detail_humidity_textview"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_width="wrap_content"
+                    android:textAppearance="?android:textAppearanceLarge"
+                    android:text="@{@string/format_humidity((float)weather.humidity)}"/>
+
+                <TextView
+                    android:fontFamily="sans-serif-condensed"
+                    android:id="@+id/detail_pressure_textview"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_width="wrap_content"
+                    android:textAppearance="?android:textAppearanceLarge"
+                    android:text="@{@string/format_pressure((float)weather.pressure)}"/>
+
+                <TextView
+                    android:fontFamily="sans-serif-condensed"
+                    android:id="@+id/detail_wind_textview"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="4dp"
+                    android:layout_width="wrap_content"
+                    android:textAppearance="?android:textAppearanceLarge"
+                    android:text="@{@string/format_wind_kmh((float)weather.windSpeed, (float)weather.windDirection)}"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_height="wrap_content"
+                android:layout_marginStart="@dimen/dp16_margin"
+                android:layout_width="wrap_content"
+                android:orientation="vertical"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toEndOf="@id/detail_main_content_container"
+                app:layout_constraintEnd_toEndOf="parent">
+
+                <ImageView
+                    android:id="@+id/detail_icon"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    app:weatherArt="@{weather}"/>
+
+                <TextView
+                    android:fontFamily="sans-serif-condensed"
+                    android:id="@+id/detail_forecast_textview"
+                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:textColor="@color/grey_700"
+                    android:textAppearance="?android:textAppearanceLarge"
+                    android:text="@{weather.description}"/>
+            </LinearLayout>
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+
+    </ScrollView>
+</layout>

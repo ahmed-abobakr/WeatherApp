@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto" android:id="@+id/naviagation_home"
+    app:startDestination="@id/emptyFragment">
+    <fragment
+        android:id="@+id/detailsFragment2"
+        android:name="com.example.weatherapp.details.mvvm.views.DetailsFragment"
+        android:label="DetailsFragment" >
+        <argument
+            android:name="weather"
+            app:argType="com.example.weatherapp.home.data.models.WeatherLocalData" />
+    </fragment>
+    <fragment
+        android:id="@+id/emptyFragment"
+        android:name="com.example.weatherapp.empty_fragment.EmptyFragment"
+        android:label="EmptyFragment" />
+</navigation>
