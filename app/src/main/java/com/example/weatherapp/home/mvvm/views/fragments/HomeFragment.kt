@@ -18,10 +18,14 @@ import com.example.weatherapp.home.mvvm.views.adapters.WeatherAdapter
 import com.example.weatherapp.home.mvvm.views.dialogs.ChooseCityDialogFragment
 import kotlinx.android.synthetic.main.fragment_home.*
 import android.content.DialogInterface
-import androidx.navigation.Navigation
+import android.util.Log
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.fragment.findNavController
+import androidx.work.*
 import com.example.weatherapp.home.data.models.WeatherLocalData
+import com.example.weatherapp.home.mvvm.workers.RefreshWeatherWorker
+import com.example.weatherapp.home.mvvm.workers.WeatherWorkerFactory
+import java.util.concurrent.TimeUnit
 
 class HomeFragment<FragmentHomeBinding : ViewDataBinding>: BaseFragment<FragmentHomeBinding>(), DialogInterface {
 
@@ -102,6 +106,7 @@ class HomeFragment<FragmentHomeBinding : ViewDataBinding>: BaseFragment<Fragment
                 showBlockLoading(requireNotNull(activity))
                 homeViewModel.isLoading(true)
                 homeViewModel.getWeatherDataSync(false, city ?: DEFAULT_CITY)
+                startRefreshWeatherWork()
                 true
             }
             R.id.action_choose_city -> {
@@ -110,6 +115,20 @@ class HomeFragment<FragmentHomeBinding : ViewDataBinding>: BaseFragment<Fragment
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    private fun startRefreshWeatherWork() {
+        val config = Configuration.Builder()
+            .setMinimumLoggingLevel(Log.INFO)
+            .setWorkerFactory(WeatherWorkerFactory(homeViewModel.getWeatherDataSync(true, city ?: DEFAULT_CITY)))
+            .build()
+        val refreshWeatherRequest = PeriodicWorkRequest.Builder(RefreshWeatherWorker::class.java, 20,
+                        TimeUnit.MINUTES)
+                        .setConstraints(Constraints.Builder().setRequiredNetworkType(NetworkType.CONNECTED).build())
+                        .build()
+        WorkManager.initialize(requireContext(), config)
+        val worManager = WorkManager.getInstance()
+        worManager.enqueueUniquePeriodicWork("refresh", ExistingPeriodicWorkPolicy.REPLACE, refreshWeatherRequest)
     }
 
     override fun dismiss() {

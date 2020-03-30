@@ -69,6 +69,9 @@ dependencies {
     //Preference Manager
     implementation "androidx.preference:preference-ktx:1.1.0"
 
+    //WorkManager
+    implementation "android.arch.work:work-runtime:1.0.1"
+
     //Material Dialog
     implementation 'com.afollestad.material-dialogs:core:3.3.0'
 
