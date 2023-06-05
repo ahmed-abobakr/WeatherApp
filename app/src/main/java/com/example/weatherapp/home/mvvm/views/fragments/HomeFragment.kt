@@ -106,7 +106,6 @@ class HomeFragment<FragmentHomeBinding : ViewDataBinding>: BaseFragment<Fragment
                 showBlockLoading(requireNotNull(activity))
                 homeViewModel.isLoading(true)
                 homeViewModel.getWeatherDataSync(false, city ?: DEFAULT_CITY)
-                startRefreshWeatherWork()
                 true
             }
             R.id.action_choose_city -> {
