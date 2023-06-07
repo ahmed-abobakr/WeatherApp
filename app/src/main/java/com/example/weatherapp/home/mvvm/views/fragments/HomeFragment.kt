@@ -105,9 +105,6 @@ class HomeFragment<FragmentHomeBinding : ViewDataBinding>: BaseFragment<Fragment
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
             R.id.action_save -> {
-                val properties = hashMapOf<String, String>()
-                properties["city"] = city ?: DEFAULT_CITY
-                Analytics.trackEvent("get weather clicked", properties)
                 showBlockLoading(requireNotNull(activity))
                 homeViewModel.isLoading(true)
                 homeViewModel.getWeatherDataSync(false, city ?: DEFAULT_CITY)
