@@ -25,6 +25,8 @@ import androidx.work.*
 import com.example.weatherapp.home.data.models.WeatherLocalData
 import com.example.weatherapp.home.mvvm.workers.RefreshWeatherWorker
 import com.example.weatherapp.home.mvvm.workers.WeatherWorkerFactory
+import com.microsoft.appcenter.analytics.Analytics
+import com.microsoft.appcenter.crashes.Crashes
 import java.util.concurrent.TimeUnit
 
 class HomeFragment<FragmentHomeBinding : ViewDataBinding>: BaseFragment<FragmentHomeBinding>(), DialogInterface {
@@ -103,6 +105,9 @@ class HomeFragment<FragmentHomeBinding : ViewDataBinding>: BaseFragment<Fragment
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when(item.itemId){
             R.id.action_save -> {
+                val properties = hashMapOf<String, String>()
+                properties["city"] = city ?: DEFAULT_CITY
+                Analytics.trackEvent("get weather clicked", properties)
                 showBlockLoading(requireNotNull(activity))
                 homeViewModel.isLoading(true)
                 homeViewModel.getWeatherDataSync(false, city ?: DEFAULT_CITY)
